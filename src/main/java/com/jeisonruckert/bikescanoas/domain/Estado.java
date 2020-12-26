@@ -13,25 +13,25 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Categoria implements Serializable {
+public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String tipo;
+	private String nome;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy="categoria")
-	private List<Bicicleta> bicicletas = new ArrayList<>();
+	@OneToMany(mappedBy="estado")
+	private List<Cidade> cidades = new ArrayList<>();
 	
-	public Categoria() {
+	public Estado() {
 	}
-	
-	public Categoria(Integer id, String tipo) {
+
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
-		this.tipo = tipo;
+		this.nome = nome;
 	}
 
 	public Integer getId() {
@@ -42,20 +42,20 @@ public class Categoria implements Serializable {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	public List<Bicicleta> getBicicletas() {
-		return bicicletas;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public void setBicicletas(List<Bicicleta> bicicletas) {
-		this.bicicletas = bicicletas;
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -82,6 +82,6 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-
-
+	
+	
 }

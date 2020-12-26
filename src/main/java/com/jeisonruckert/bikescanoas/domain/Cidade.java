@@ -1,37 +1,38 @@
 package com.jeisonruckert.bikescanoas.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Categoria implements Serializable {
+public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String tipo;
+	private String nome;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy="categoria")
-	private List<Bicicleta> bicicletas = new ArrayList<>();
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="estado_id")
+	private Estado estado;
 	
-	public Categoria() {
+	public Cidade() {
 	}
-	
-	public Categoria(Integer id, String tipo) {
+
+	public Cidade(Integer id, String nome, Estado estado) {
 		super();
 		this.id = id;
-		this.tipo = tipo;
+		this.nome = nome;
+		this.estado = estado;
 	}
 
 	public Integer getId() {
@@ -42,20 +43,20 @@ public class Categoria implements Serializable {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	public List<Bicicleta> getBicicletas() {
-		return bicicletas;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public void setBicicletas(List<Bicicleta> bicicletas) {
-		this.bicicletas = bicicletas;
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -82,6 +83,7 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
 
 }
