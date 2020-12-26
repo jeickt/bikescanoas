@@ -10,11 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.jeisonruckert.bikescanoas.domain.Bicicleta;
 import com.jeisonruckert.bikescanoas.domain.Categoria;
 import com.jeisonruckert.bikescanoas.domain.Cidade;
+import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Estado;
+import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CidadeRepository;
+import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.EstadoRepository;
+import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 
 @SpringBootApplication
 public class BikescanoasApplication implements CommandLineRunner {
@@ -27,6 +31,10 @@ public class BikescanoasApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 
 	public static void main(String[] args) {
@@ -65,7 +73,15 @@ public class BikescanoasApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2));
-
+		
+		Usuario us1 = new Usuario(null, "01234567890", "Jorge Cardoso", "jorge@gmail.com");
+		us1.getTelefones().addAll(Arrays.asList("5130313233", "51987654321"));
+		
+		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Igara", "92412-250", us1, cid1);
+		us1.setEndereco(end1);
+		
+		usuarioRepository.saveAll(Arrays.asList(us1));
+		enderecoRepository.saveAll(Arrays.asList(end1));
 		
 	}
 
