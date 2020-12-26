@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Bicicleta implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -24,6 +26,7 @@ public class Bicicleta implements Serializable{
 	private Double KmTerminal;
 	private Boolean manutencao;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;

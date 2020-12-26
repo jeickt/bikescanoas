@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,17 +19,18 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String modelo;
+	private String tipo;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="categoria")
 	private List<Bicicleta> bicicletas = new ArrayList<>();
 	
 	public Categoria() {
 	}
 	
-	public Categoria(Integer id, String modelo) {
+	public Categoria(Integer id, String tipo) {
 		this.id = id;
-		this.modelo = modelo;
+		this.tipo = tipo;
 	}
 
 	public Integer getId() {
@@ -38,12 +41,12 @@ public class Categoria implements Serializable {
 		this.id = id;
 	}
 
-	public String getModelo() {
-		return modelo;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	public List<Bicicleta> getBicicletas() {
