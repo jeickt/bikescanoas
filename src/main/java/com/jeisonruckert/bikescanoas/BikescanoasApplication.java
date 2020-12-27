@@ -99,11 +99,14 @@ public class BikescanoasApplication implements CommandLineRunner {
 		Categoria cat3 = new Categoria(null, "Urban");
 		Categoria cat4 = new Categoria(null, "Infantil");
 		
-		Bicicleta b1 = new Bicicleta(null, "Caloi", "Atacama", "19", "29", cat1);
+		Terminal ter1 = new Terminal(null, "centro", 550);
 		
+		Bicicleta b1 = new Bicicleta(null, "Caloi", "Atacama", "19", "29", cat1, ter1);
+		ter1.getBicicletas().addAll(Arrays.asList(b1));
 		cat1.getBicicletas().addAll(Arrays.asList(b1));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
+		terminalRepository.saveAll(Arrays.asList(ter1));
 		bicicletaRepository.saveAll(Arrays.asList(b1));
 
 		Compra com1 = new Compra(null, sdf.parse("05/12/2020 15:18"), 3999.99, "Centauro", us1, b1);
@@ -116,13 +119,6 @@ public class BikescanoasApplication implements CommandLineRunner {
 		
 		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
 		
-		Terminal ter1 = new Terminal(null, "centro", 550);
-		b1.setTerminal(ter1);
-		
-		ter1.getBicicletas().addAll(Arrays.asList(b1));
-		
-		terminalRepository.saveAll(Arrays.asList(ter1));
-		
 		Oficina ofi1 = new Oficina(null, "88888888444422", "BikesConserto");
 		
 		Manutencao man1 = new Manutencao(null, sdf.parse("15/12/2020 16:55"), 252.34, 86.00, "Anderson Machado", b1, ofi1);
@@ -134,8 +130,6 @@ public class BikescanoasApplication implements CommandLineRunner {
 		Uso uso1 = new Uso(null, sdf.parse("12/12/2020 7:10"), sdf.parse("12/12/2020 7:50"), us1, b1);
 		us1.getUsos().addAll(Arrays.asList(uso1));
 		
-		usuarioRepository.saveAll(Arrays.asList(us1));
-		enderecoRepository.saveAll(Arrays.asList(end1));
 		usoRepository.saveAll(Arrays.asList(uso1));
 
 	}

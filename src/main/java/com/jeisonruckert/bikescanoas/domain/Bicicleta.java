@@ -34,12 +34,12 @@ public class Bicicleta implements Serializable {
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="terminal_id")
-	private Terminal terminal = null;
+	private Terminal terminal;
 	
 	public Bicicleta() {
 	}
 
-	public Bicicleta(Integer id, String fabricante, String modelo, String tamQuadro, String tamAro, Categoria categoria) {
+	public Bicicleta(Integer id, String fabricante, String modelo, String tamQuadro, String tamAro, Categoria categoria, Terminal terminal) {
 		super();
 		this.id = id;
 		this.fabricante = fabricante;
@@ -47,6 +47,7 @@ public class Bicicleta implements Serializable {
 		this.tamQuadro = tamQuadro;
 		this.tamAro = tamAro;
 		this.categoria = categoria;
+		this.terminal = terminal;
 	}
 	
 	

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Uso implements Serializable {
@@ -19,7 +20,9 @@ public class Uso implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date partida;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date chegada;
 	private Boolean precisaConserto = false;
 	
