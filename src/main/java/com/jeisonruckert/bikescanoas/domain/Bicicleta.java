@@ -22,29 +22,30 @@ public class Bicicleta implements Serializable {
 	private String modelo;
 	private String tamQuadro;
 	private String tamAro;
-	private Double KmManutencao;
-	private Double KmTerminal;
-	private Boolean manutencao;
+	private Double KmManutencao = 0.0;
+	private Double KmTerminal = 0.0;
+	private Boolean manutencao = false;
 	
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
 	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="terminal_id")
+	private Terminal terminal = null;
+	
 	public Bicicleta() {
 	}
 
-	public Bicicleta(Integer id, String fabricante, String modelo, String tamQuadro, String tamAro, Double kmManutencao,
-			Double kmTerminal, Boolean manutencao, Categoria categoria) {
+	public Bicicleta(Integer id, String fabricante, String modelo, String tamQuadro, String tamAro, Categoria categoria) {
 		super();
 		this.id = id;
 		this.fabricante = fabricante;
 		this.modelo = modelo;
 		this.tamQuadro = tamQuadro;
 		this.tamAro = tamAro;
-		KmManutencao = kmManutencao;
-		KmTerminal = kmTerminal;
-		this.manutencao = manutencao;
 		this.categoria = categoria;
 	}
 	
@@ -112,10 +113,6 @@ public class Bicicleta implements Serializable {
 	public void setManutencao(Boolean manutencao) {
 		this.manutencao = manutencao;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
 	public Categoria getCategoria() {
 		return categoria;
@@ -124,7 +121,16 @@ public class Bicicleta implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	
+	public Terminal getTerminal() {
+		return terminal;
+	}
 
+	public void setTerminal(Terminal terminal) {
+		this.terminal = terminal;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -132,7 +138,7 @@ public class Bicicleta implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

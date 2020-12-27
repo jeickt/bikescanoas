@@ -10,27 +10,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Estado implements Serializable {
+public class Oficina implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	private String cnpj;
 	private String nome;
 	
-	@JsonBackReference
-	@OneToMany(mappedBy="estado")
-	private List<Cidade> cidades = new ArrayList<>();
+	@JsonManagedReference
+	@OneToMany(mappedBy="oficina")
+	private List<Manutencao> manutencoes = new ArrayList<>();
 	
-	public Estado() {
+	public Oficina() {
 	}
 
-	public Estado(Integer id, String nome) {
+	public Oficina(Integer id, String cnpj, String nome) {
 		super();
 		this.id = id;
+		this.cnpj = cnpj;
 		this.nome = nome;
 	}
 
@@ -42,6 +44,14 @@ public class Estado implements Serializable {
 		this.id = id;
 	}
 
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -49,13 +59,13 @@ public class Estado implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public List<Cidade> getCidades() {
-		return cidades;
+	
+	public List<Manutencao> getManutencoes() {
+		return manutencoes;
 	}
 
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
+	public void setManutencoes(List<Manutencao> manutencoes) {
+		this.manutencoes = manutencoes;
 	}
 
 	@Override
@@ -74,7 +84,7 @@ public class Estado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Oficina other = (Oficina) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

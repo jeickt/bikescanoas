@@ -1,7 +1,9 @@
 package com.jeisonruckert.bikescanoas.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,8 +28,8 @@ public class Usuario implements Serializable {
 	private String cpf;
 	private String nome;
 	private String email;
-	private Double saldo;
-	private Double KmTotal;
+	private Double saldo = 0.0;
+	private Double KmTotal = 0.0;
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
@@ -34,7 +37,15 @@ public class Usuario implements Serializable {
 	
 	@JsonManagedReference
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="usuario")
-	private Endereco endereco;
+	private Endereco endereco = null;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="usuario")
+	private List<Pagamento> pagamentos = new ArrayList<>();
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="usuario")
+	private List<Uso> usos = new ArrayList<>();
 	
 	public Usuario() {
 	}
@@ -45,9 +56,6 @@ public class Usuario implements Serializable {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
-		this.saldo = 0.0;
-		this.KmTotal = 0.0;
-		this.endereco = null;
 	}
 
 	public Integer getId() {
@@ -112,6 +120,22 @@ public class Usuario implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
+
+	public List<Uso> getUsos() {
+		return usos;
+	}
+
+	public void setUsos(List<Uso> usos) {
+		this.usos = usos;
 	}
 
 	@Override

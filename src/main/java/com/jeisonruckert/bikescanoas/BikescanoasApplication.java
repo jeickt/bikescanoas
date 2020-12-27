@@ -1,5 +1,6 @@
 package com.jeisonruckert.bikescanoas;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,31 +11,59 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.jeisonruckert.bikescanoas.domain.Bicicleta;
 import com.jeisonruckert.bikescanoas.domain.Categoria;
 import com.jeisonruckert.bikescanoas.domain.Cidade;
+import com.jeisonruckert.bikescanoas.domain.Compra;
 import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Estado;
+import com.jeisonruckert.bikescanoas.domain.Manutencao;
+import com.jeisonruckert.bikescanoas.domain.Oficina;
+import com.jeisonruckert.bikescanoas.domain.Pagamento;
+import com.jeisonruckert.bikescanoas.domain.PagamentoComBoleto;
+import com.jeisonruckert.bikescanoas.domain.PagamentoComCartao;
+import com.jeisonruckert.bikescanoas.domain.Terminal;
+import com.jeisonruckert.bikescanoas.domain.Uso;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
+import com.jeisonruckert.bikescanoas.domain.enums.EstadoPagamento;
 import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CidadeRepository;
+import com.jeisonruckert.bikescanoas.repositories.CompraRepository;
 import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.EstadoRepository;
+import com.jeisonruckert.bikescanoas.repositories.ManutencaoRepository;
+import com.jeisonruckert.bikescanoas.repositories.OficinaRepository;
+import com.jeisonruckert.bikescanoas.repositories.PagamentoRepository;
+import com.jeisonruckert.bikescanoas.repositories.TerminalRepository;
+import com.jeisonruckert.bikescanoas.repositories.UsoRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 
 @SpringBootApplication
 public class BikescanoasApplication implements CommandLineRunner {
 	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
-	@Autowired
 	private BicicletaRepository bicicletaRepository;
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private CompraRepository compraRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+	@Autowired
+	private ManutencaoRepository manutencaoRepository;
+	@Autowired
+	private OficinaRepository oficinaRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private TerminalRepository terminalRepository;
+	@Autowired
+	private UsoRepository usoRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
 	
 
 	public static void main(String[] args) {
@@ -44,26 +73,8 @@ public class BikescanoasApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Categoria cat1 = new Categoria(null, "MTB");
-		Categoria cat2 = new Categoria(null, "Speed");
-		Categoria cat3 = new Categoria(null, "Urban");
-		Categoria cat4 = new Categoria(null, "Infantil");
-		
-		
-		Bicicleta b1 = new Bicicleta(null, "Caloi", "Atacama", "19", "29", 0.0, 0.0, false, cat1);
-		Bicicleta b2 = new Bicicleta(null, "Soul", "Claris", "XS", "29", 0.0, 0.0, false, cat3);
-		Bicicleta b3 = new Bicicleta(null, "Oggi", "Velloce", "56", "700", 0.0, 0.0, false, cat2);
-		Bicicleta b4 = new Bicicleta(null, "Houston", "TN161Q", "único", "20", 0.0, 0.0, false, cat4);
-		Bicicleta b5 = new Bicicleta(null, "Caloi", "10", "55", "700", 0.0, 0.0, false, cat2);
-		
-		cat1.getBicicletas().addAll(Arrays.asList(b1));
-		cat2.getBicicletas().addAll(Arrays.asList(b3, b5));
-		cat3.getBicicletas().addAll(Arrays.asList(b2));
-		cat4.getBicicletas().addAll(Arrays.asList(b4));
-		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
-		bicicletaRepository.saveAll(Arrays.asList(b1, b2, b3, b4, b5));
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
 		Estado est1 = new Estado(null, "Rio Grande do Sul");
 		
 		Cidade cid1 = new Cidade(null, "Canoas", est1);
@@ -83,6 +94,50 @@ public class BikescanoasApplication implements CommandLineRunner {
 		usuarioRepository.saveAll(Arrays.asList(us1));
 		enderecoRepository.saveAll(Arrays.asList(end1));
 		
+		Categoria cat1 = new Categoria(null, "MTB");
+		Categoria cat2 = new Categoria(null, "Speed");
+		Categoria cat3 = new Categoria(null, "Urban");
+		Categoria cat4 = new Categoria(null, "Infantil");
+		
+		Bicicleta b1 = new Bicicleta(null, "Caloi", "Atacama", "19", "29", cat1);
+		
+		cat1.getBicicletas().addAll(Arrays.asList(b1));
+		
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
+		bicicletaRepository.saveAll(Arrays.asList(b1));
+
+		Compra com1 = new Compra(null, sdf.parse("05/12/2020 15:18"), 3999.99, "Centauro", us1, b1);
+		
+		compraRepository.saveAll(Arrays.asList(com1));
+		
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, us1, 3);
+		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, us1, sdf.parse("20/02/2021 23:59"), null);
+		us1.getPagamentos().addAll(Arrays.asList(pag1, pag2));
+		
+		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
+		
+		Terminal ter1 = new Terminal(null, "centro", 550);
+		b1.setTerminal(ter1);
+		
+		ter1.getBicicletas().addAll(Arrays.asList(b1));
+		
+		terminalRepository.saveAll(Arrays.asList(ter1));
+		
+		Oficina ofi1 = new Oficina(null, "88888888444422", "BikesConserto");
+		
+		Manutencao man1 = new Manutencao(null, sdf.parse("15/12/2020 16:55"), 252.34, 86.00, "Anderson Machado", b1, ofi1);
+		ofi1.getManutencoes().addAll(Arrays.asList(man1));
+		
+		oficinaRepository.saveAll(Arrays.asList(ofi1));
+		manutencaoRepository.saveAll(Arrays.asList(man1));
+		
+		Uso uso1 = new Uso(null, sdf.parse("12/12/2020 7:10"), sdf.parse("12/12/2020 7:50"), us1, b1);
+		us1.getUsos().addAll(Arrays.asList(uso1));
+		
+		usuarioRepository.saveAll(Arrays.asList(us1));
+		enderecoRepository.saveAll(Arrays.asList(end1));
+		usoRepository.saveAll(Arrays.asList(uso1));
+
 	}
 
 }
