@@ -18,7 +18,7 @@ public class TerminalResource {
 	private TerminalService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Terminal> find(@PathVariable Integer id) {
 		Terminal obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
