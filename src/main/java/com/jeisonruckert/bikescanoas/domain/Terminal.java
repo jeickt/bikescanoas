@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Terminal implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +20,6 @@ public class Terminal implements Serializable {
 	private String nome;
 	private Integer vagas;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="terminal")
 	private List<Bicicleta> bicicletas = new ArrayList<>();
 	

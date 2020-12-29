@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Bicicleta implements Serializable {
@@ -26,12 +26,12 @@ public class Bicicleta implements Serializable {
 	private Double KmTerminal = 0.0;
 	private Boolean manutencao = false;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="terminal_id")
 	private Terminal terminal;

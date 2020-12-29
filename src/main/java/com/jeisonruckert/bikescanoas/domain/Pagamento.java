@@ -11,7 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jeisonruckert.bikescanoas.domain.enums.EstadoPagamento;
 
 @Entity
@@ -25,7 +25,7 @@ public abstract class Pagamento implements Serializable {
 	private Integer estado;
 	
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
