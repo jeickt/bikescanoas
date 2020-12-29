@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.jeisonruckert.bikescanoas.domain.Categoria;
+import com.jeisonruckert.bikescanoas.dto.CategoriaDTO;
 import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
 import com.jeisonruckert.bikescanoas.services.exceptions.DataIntegrityException;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
@@ -53,6 +54,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria (objDto.getId(), objDto.getTipo());
 	}
 	
  }
