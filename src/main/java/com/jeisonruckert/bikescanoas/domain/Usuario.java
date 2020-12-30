@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="usuario")
+	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL)
 	private Endereco endereco = null;
 	
 	@OneToMany(mappedBy="usuario")

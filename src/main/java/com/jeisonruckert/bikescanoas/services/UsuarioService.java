@@ -44,7 +44,9 @@ public class UsuarioService {
 	@Transactional
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		obj = repo.save(obj);
+		enderecoRepository.save(obj.getEndereco());
+		return obj;
 	}
 	
 	public Usuario update(Usuario obj) {
@@ -58,7 +60,7 @@ public class UsuarioService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas");
+			throw new DataIntegrityException("Não é possível excluir porque há registros relacionados");
 		}
 	}
 	
