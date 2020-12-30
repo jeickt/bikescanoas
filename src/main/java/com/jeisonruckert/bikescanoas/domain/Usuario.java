@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,8 @@ public class Usuario implements Serializable {
 	private Integer id;
 	private String cpf;
 	private String nome;
+	
+	@Column(unique=true)
 	private String email;
 	private Double saldo = 0.0;
 	private Double kmTotal = 0.0;
