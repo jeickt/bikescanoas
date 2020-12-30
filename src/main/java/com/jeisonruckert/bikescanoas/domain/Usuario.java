@@ -53,6 +53,7 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -133,6 +134,7 @@ public class Usuario implements Serializable {
 		this.usos = usos;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -157,6 +159,5 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

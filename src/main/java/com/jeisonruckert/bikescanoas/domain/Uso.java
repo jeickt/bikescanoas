@@ -46,6 +46,7 @@ public class Uso implements Serializable {
 		this.usuario = usuario;
 		this.bicicleta = bicicleta;
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -120,6 +121,5 @@ public class Uso implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

@@ -17,6 +17,7 @@ public class PagamentoComCartao extends Pagamento{
 		super(id, estado, usuario);
 		this.numeroDeParcelas = numeroDeParcelas;
 	}
+	
 
 	public Integer getNumeroDeParcelas() {
 		return numeroDeParcelas;
@@ -25,7 +26,5 @@ public class PagamentoComCartao extends Pagamento{
 	public void setNumeroDeParcelas(Integer numeroDeParcelas) {
 		this.numeroDeParcelas = numeroDeParcelas;
 	}
-	
-	
 
 }

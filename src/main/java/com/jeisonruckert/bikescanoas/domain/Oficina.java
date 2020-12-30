@@ -32,6 +32,7 @@ public class Oficina implements Serializable {
 		this.cnpj = cnpj;
 		this.nome = nome;
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -65,6 +66,7 @@ public class Oficina implements Serializable {
 		this.manutencoes = manutencoes;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -89,6 +91,5 @@ public class Oficina implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

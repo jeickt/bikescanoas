@@ -63,6 +63,7 @@ public class Manutencao implements Serializable {
 		this.oficina = oficina;
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -135,6 +136,7 @@ public class Manutencao implements Serializable {
 		this.oficina = oficina;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -159,6 +161,5 @@ public class Manutencao implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

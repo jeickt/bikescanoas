@@ -33,6 +33,7 @@ public class Terminal implements Serializable {
 		this.vagas = vagas;
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -90,7 +91,5 @@ public class Terminal implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

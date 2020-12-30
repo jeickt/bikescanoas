@@ -25,6 +25,7 @@ public class CategoriaDTO implements Serializable {
 		tipo = obj.getTipo();
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -40,6 +41,5 @@ public class CategoriaDTO implements Serializable {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
 	
 }

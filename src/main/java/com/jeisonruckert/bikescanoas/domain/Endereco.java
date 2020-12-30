@@ -48,6 +48,7 @@ public class Endereco implements Serializable {
 		this.usuario = usuario;
 		this.cidade = cidade;
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -138,6 +139,5 @@ public class Endereco implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

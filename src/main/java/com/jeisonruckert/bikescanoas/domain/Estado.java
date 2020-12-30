@@ -33,6 +33,7 @@ public class Estado implements Serializable {
 		this.id = id;
 		this.nome = nome;
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -58,6 +59,7 @@ public class Estado implements Serializable {
 		this.cidades = cidades;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,6 +84,5 @@ public class Estado implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

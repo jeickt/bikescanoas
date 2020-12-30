@@ -34,6 +34,7 @@ public class UsuarioDTO implements Serializable {
 		saldo = obj.getSaldo();
 		kmTotal = obj.getKmTotal();
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -75,6 +76,4 @@ public class UsuarioDTO implements Serializable {
 		this.kmTotal = kmTotal;
 	}
 
-	
-	
 }

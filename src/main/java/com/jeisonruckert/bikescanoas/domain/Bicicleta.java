@@ -157,6 +157,4 @@ public class Bicicleta implements Serializable {
 		return true;
 	}
 	
-	
-
 }

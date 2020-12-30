@@ -24,6 +24,7 @@ public class PagamentoComBoleto extends Pagamento {
 		this.dataVencimento = dataVencimento;
 		this.dataPagamento = dataPagamento;
 	}
+	
 
 	public Date getDataVencimento() {
 		return dataVencimento;
@@ -41,5 +42,4 @@ public class PagamentoComBoleto extends Pagamento {
 		this.dataPagamento = dataPagamento;
 	}
 
-	
 }

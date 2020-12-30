@@ -65,7 +65,6 @@ public class BikescanoasApplication implements CommandLineRunner {
 	private UsuarioRepository usuarioRepository;
 
 	
-
 	public static void main(String[] args) {
 		SpringApplication.run(BikescanoasApplication.class, args);
 	}

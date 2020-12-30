@@ -24,7 +24,6 @@ public abstract class Pagamento implements Serializable {
 	private Integer id;
 	private Integer estado;
 	
-	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
@@ -40,6 +39,7 @@ public abstract class Pagamento implements Serializable {
 		this.usuario = usuario;
 	}
 
+	
 	public Integer getId() {
 		return id;
 	}
