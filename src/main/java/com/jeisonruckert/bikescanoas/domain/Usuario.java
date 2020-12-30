@@ -27,7 +27,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String email;
 	private Double saldo = 0.0;
-	private Double KmTotal = 0.0;
+	private Double kmTotal = 0.0;
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
@@ -94,11 +94,11 @@ public class Usuario implements Serializable {
 	}
 
 	public Double getKmTotal() {
-		return KmTotal;
+		return kmTotal;
 	}
 
 	public void setKmTotal(Double kmTotal) {
-		KmTotal = kmTotal;
+		this.kmTotal = kmTotal;
 	}
 
 	public Set<String> getTelefones() {
