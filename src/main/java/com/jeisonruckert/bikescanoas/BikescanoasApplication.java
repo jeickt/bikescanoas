@@ -100,15 +100,17 @@ public class BikescanoasApplication implements CommandLineRunner {
 		
 		Terminal ter1 = new Terminal(null, "centro", 550);
 		
-		Bicicleta b1 = new Bicicleta(null, "Caloi", "Atacama", "19", "29", cat1, ter1);
-		ter1.getBicicletas().addAll(Arrays.asList(b1));
-		cat1.getBicicletas().addAll(Arrays.asList(b1));
+		Bicicleta bic1 = new Bicicleta(null, "Caloi", "Atacama", "19", "29", cat1, ter1);
+		ter1.getBicicletas().addAll(Arrays.asList(bic1));
+		cat1.getBicicletas().addAll(Arrays.asList(bic1));
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
 		terminalRepository.saveAll(Arrays.asList(ter1));
-		bicicletaRepository.saveAll(Arrays.asList(b1));
+		bicicletaRepository.saveAll(Arrays.asList(bic1));
 
-		Compra com1 = new Compra(null, sdf.parse("05/12/2020 15:18"), 3999.99, "Centauro", us1, b1);
+		Compra com1 = new Compra(null, sdf.parse("05/12/2020 15:18"), 3999.99, "Centauro");
+		com1.setUsuario(us1);
+		com1.setBicicleta(bic1);
 		
 		compraRepository.saveAll(Arrays.asList(com1));
 		
@@ -120,13 +122,13 @@ public class BikescanoasApplication implements CommandLineRunner {
 		
 		Oficina ofi1 = new Oficina(null, "88888888444422", "BikesConserto");
 		
-		Manutencao man1 = new Manutencao(null, sdf.parse("15/12/2020 16:55"), 252.34, 86.00, "Anderson Machado", b1, ofi1);
+		Manutencao man1 = new Manutencao(null, sdf.parse("15/12/2020 16:55"), 252.34, 86.00, "Anderson Machado", bic1, ofi1);
 		ofi1.getManutencoes().addAll(Arrays.asList(man1));
 		
 		oficinaRepository.saveAll(Arrays.asList(ofi1));
 		manutencaoRepository.saveAll(Arrays.asList(man1));
 		
-		Uso uso1 = new Uso(null, sdf.parse("12/12/2020 7:10"), sdf.parse("12/12/2020 7:50"), us1, b1);
+		Uso uso1 = new Uso(null, sdf.parse("12/12/2020 7:10"), sdf.parse("12/12/2020 7:50"), us1, bic1);
 		us1.getUsos().addAll(Arrays.asList(uso1));
 		
 		usoRepository.saveAll(Arrays.asList(uso1));

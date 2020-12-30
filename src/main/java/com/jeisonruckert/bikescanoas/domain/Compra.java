@@ -19,6 +19,7 @@ public class Compra implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
 	private Double preco;
@@ -37,14 +38,12 @@ public class Compra implements Serializable {
 	public Compra() {
 	}
 
-	public Compra(Integer id, Date data, Double preco, String loja, Usuario usuario, Bicicleta bicicleta) {
+	public Compra(Integer id, Date data, Double preco, String loja) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.preco = preco;
 		this.loja = loja;
-		this.usuario = usuario;
-		this.bicicleta = bicicleta;
 	}
 	
 

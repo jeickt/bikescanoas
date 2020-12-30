@@ -14,6 +14,7 @@ import com.jeisonruckert.bikescanoas.services.validation.UsuarioInsert;
 public class UsuarioNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	@CPF
 	private String cpf;
 	
