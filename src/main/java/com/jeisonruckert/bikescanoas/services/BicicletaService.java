@@ -83,4 +83,19 @@ public class BicicletaService {
 		objBD.setTerminal(obj.getTerminal());
 	}
 	
+	public Page<Bicicleta> searchQuadro(String tamQuadro, Integer idC, Integer idT, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Categoria categoria = categoriaRepository.findById(idC).get();
+		Terminal terminal = terminalRepository.findById(idT).get();
+		return repo.searchQuadro(tamQuadro, categoria, terminal, pageRequest);
+	}
+	
+	public Page<Bicicleta> searchAro(String tamAro, Integer idC, Integer idT, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Categoria categoria = categoriaRepository.findById(idC).get();
+		Terminal terminal = terminalRepository.findById(idT).get();
+		// return repo.searchAro(tamAro, categoria, terminal, pageRequest);
+		return repo.findByTamAroAndCategoriaAndTerminal(tamAro, categoria, terminal, pageRequest);
+	}
+	
  }

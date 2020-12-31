@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeisonruckert.bikescanoas.domain.Compra;
 
 public class CompraDTO implements Serializable {
@@ -14,6 +15,7 @@ public class CompraDTO implements Serializable {
 	
 	private Integer id;
 
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
 	private Double preco;
 	

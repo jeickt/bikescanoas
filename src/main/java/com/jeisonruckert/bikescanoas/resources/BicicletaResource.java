@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jeisonruckert.bikescanoas.domain.Bicicleta;
 import com.jeisonruckert.bikescanoas.dto.BicicletaDTO;
+import com.jeisonruckert.bikescanoas.resources.utils.URL;
 import com.jeisonruckert.bikescanoas.services.BicicletaService;
 
 @RestController
@@ -65,6 +66,36 @@ public class BicicletaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/searchQuadro", method=RequestMethod.GET)
+	public ResponseEntity<Page<BicicletaDTO>> findPageQuadro(
+			@RequestParam(value="tamQuadro", defaultValue="") String tamQuadro,
+			@RequestParam(value="categoria", defaultValue="") String categoria,
+			@RequestParam(value="terminal", defaultValue="") String terminal,
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="tamQuadro") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		String consDecoded = URL.decodeParam(tamQuadro);
+		Page<Bicicleta> list = service.searchQuadro(consDecoded, Integer.parseInt(categoria), Integer.parseInt(terminal), page, linesPerPage, orderBy, direction);
+		Page<BicicletaDTO> listDTO = list.map(obj -> new BicicletaDTO(obj));
+		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	@RequestMapping(value="/searchAro", method=RequestMethod.GET)
+	public ResponseEntity<Page<BicicletaDTO>> findPageAro(
+			@RequestParam(value="tamAro", defaultValue="") String tamAro,
+			@RequestParam(value="categoria", defaultValue="") String categoria,
+			@RequestParam(value="terminal", defaultValue="") String terminal,
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="tamQuadro") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		String consDecoded = URL.decodeParam(tamAro);
+		Page<Bicicleta> list = service.searchAro(consDecoded, Integer.parseInt(categoria), Integer.parseInt(terminal), page, linesPerPage, orderBy, direction);
+		Page<BicicletaDTO> listDTO = list.map(obj -> new BicicletaDTO(obj));
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 }
