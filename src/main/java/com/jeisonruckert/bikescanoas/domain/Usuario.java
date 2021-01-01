@@ -140,6 +140,14 @@ public class Usuario implements Serializable {
 	public void setUsos(List<Uso> usos) {
 		this.usos = usos;
 	}
+	
+	public double getDistanciaTotal() {
+		double soma = 0.0;
+		for (Uso u : usos) {
+			soma += u.getDistancia();
+		}
+		return soma;
+	}
 
 	
 	@Override

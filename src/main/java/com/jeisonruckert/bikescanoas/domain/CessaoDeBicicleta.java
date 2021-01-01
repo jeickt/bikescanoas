@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class Compra implements Serializable {
+public class CessaoDeBicicleta implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -30,18 +30,16 @@ public class Compra implements Serializable {
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 	
-
 	@OneToOne
 	@JoinColumn(name="bicicleta_id")
 	private Bicicleta bicicleta;
 	
-	public Compra() {
+	public CessaoDeBicicleta() {
 	}
 
-	public Compra(Integer id, Date data, Double preco, String loja) {
+	public CessaoDeBicicleta(Integer id, Double preco, String loja) {
 		super();
 		this.id = id;
-		this.data = data;
 		this.preco = preco;
 		this.loja = loja;
 	}
@@ -112,7 +110,7 @@ public class Compra implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Compra other = (Compra) obj;
+		CessaoDeBicicleta other = (CessaoDeBicicleta) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

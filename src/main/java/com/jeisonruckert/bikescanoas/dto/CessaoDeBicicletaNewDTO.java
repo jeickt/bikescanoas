@@ -1,22 +1,14 @@
 package com.jeisonruckert.bikescanoas.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jeisonruckert.bikescanoas.services.validation.UsuarioInsert;
-
-@UsuarioInsert
-public class CompraNewDTO implements Serializable {
+public class CessaoDeBicicletaNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
-	private Date data;
-	
-	@NotEmpty(message="Preenchimento obrigatório")
 	private Double preco;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
@@ -41,17 +33,9 @@ public class CompraNewDTO implements Serializable {
 	
 	private Integer usuarioId;
 	
-	public CompraNewDTO() {
+	public CessaoDeBicicletaNewDTO() {
 	}
 	
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
 
 	public Double getPreco() {
 		return preco;
@@ -105,21 +89,17 @@ public class CompraNewDTO implements Serializable {
 		return categoriaId;
 	}
 
-
 	public void setCategoriaId(Integer categoriaId) {
 		this.categoriaId = categoriaId;
 	}
-
 
 	public Integer getTerminalId() {
 		return terminalId;
 	}
 
-
 	public void setTerminalId(Integer terminalId) {
 		this.terminalId = terminalId;
 	}
-
 
 	public Integer getUsuarioId() {
 		return usuarioId;

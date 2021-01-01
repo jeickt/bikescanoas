@@ -24,6 +24,7 @@ public class Uso implements Serializable {
 	private Date partida;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date chegada;
+	private Double distancia;
 	private Boolean precisaConserto = false;
 	
 	@JsonIgnore
@@ -38,13 +39,11 @@ public class Uso implements Serializable {
 	public Uso() {
 	}
 
-	public Uso(Integer id, Date partida, Date chegada, Usuario usuario, Bicicleta bicicleta) {
+	public Uso(Integer id, Date partida, Date chegada) {
 		super();
 		this.id = id;
 		this.partida = partida;
 		this.chegada = chegada;
-		this.usuario = usuario;
-		this.bicicleta = bicicleta;
 	}
 	
 
@@ -70,6 +69,14 @@ public class Uso implements Serializable {
 
 	public void setChegada(Date chegada) {
 		this.chegada = chegada;
+	}
+
+	public Double getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(Double distancia) {
+		this.distancia = distancia;
 	}
 
 	public Boolean getPrecisaConserto() {

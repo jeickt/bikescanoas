@@ -48,7 +48,7 @@ public class TerminalService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir um terminal que possui bicicletas");
+			throw new DataIntegrityException("Não é possível excluir um terminal que possui bicicletas associadas");
 		}
 	}
 	

@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jeisonruckert.bikescanoas.domain.Bicicleta;
 import com.jeisonruckert.bikescanoas.domain.Categoria;
+import com.jeisonruckert.bikescanoas.domain.CessaoDeBicicleta;
 import com.jeisonruckert.bikescanoas.domain.Cidade;
-import com.jeisonruckert.bikescanoas.domain.Compra;
 import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Estado;
 import com.jeisonruckert.bikescanoas.domain.Manutencao;
@@ -25,8 +25,8 @@ import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.domain.enums.EstadoPagamento;
 import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
+import com.jeisonruckert.bikescanoas.repositories.CessaoDeBicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CidadeRepository;
-import com.jeisonruckert.bikescanoas.repositories.CompraRepository;
 import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.EstadoRepository;
 import com.jeisonruckert.bikescanoas.repositories.ManutencaoRepository;
@@ -46,7 +46,7 @@ public class BikescanoasApplication implements CommandLineRunner {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	@Autowired
-	private CompraRepository compraRepository;
+	private CessaoDeBicicletaRepository cessaoDeBicicletaRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	@Autowired
@@ -84,13 +84,13 @@ public class BikescanoasApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2));
 		
-		Usuario us1 = new Usuario(null, "01234567890", "Jorge Cardoso", "jorge@gmail.com");
-		us1.getTelefones().addAll(Arrays.asList("5130313233", "51987654321"));
+		Usuario usu1 = new Usuario(null, "01234567890", "Jorge Cardoso", "jorge@gmail.com");
+		usu1.getTelefones().addAll(Arrays.asList("5130313233", "51987654321"));
 		
-		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Igara", "92412-250", us1, cid1);
-		us1.setEndereco(end1);
+		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Igara", "92412-250", usu1, cid1);
+		usu1.setEndereco(end1);
 		
-		usuarioRepository.saveAll(Arrays.asList(us1));
+		usuarioRepository.saveAll(Arrays.asList(usu1));
 		enderecoRepository.saveAll(Arrays.asList(end1));
 		
 		Categoria cat1 = new Categoria(null, "MTB");
@@ -108,28 +108,34 @@ public class BikescanoasApplication implements CommandLineRunner {
 		terminalRepository.saveAll(Arrays.asList(ter1));
 		bicicletaRepository.saveAll(Arrays.asList(bic1));
 
-		Compra com1 = new Compra(null, sdf.parse("05/12/2020 15:18"), 3999.99, "Centauro");
-		com1.setUsuario(us1);
-		com1.setBicicleta(bic1);
+		CessaoDeBicicleta ces1 = new CessaoDeBicicleta(null, 3999.99, "Centauro");
+		ces1.setUsuario(usu1);
+		ces1.setBicicleta(bic1);
 		
-		compraRepository.saveAll(Arrays.asList(com1));
+		cessaoDeBicicletaRepository.saveAll(Arrays.asList(ces1));
 		
-		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, us1, 3);
-		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, us1, sdf.parse("20/02/2021 23:59"), null);
-		us1.getPagamentos().addAll(Arrays.asList(pag1, pag2));
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, usu1, 3);
+		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, usu1, sdf.parse("20/02/2021 23:59"), null);
+		usu1.getPagamentos().addAll(Arrays.asList(pag1, pag2));
 		
 		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
 		
 		Oficina ofi1 = new Oficina(null, "88888888444422", "BikesConserto");
 		
-		Manutencao man1 = new Manutencao(null, sdf.parse("15/12/2020 16:55"), 252.34, 86.00, "Anderson Machado", bic1, ofi1);
+		Manutencao man1 = new Manutencao(null, 252.34, 86.00, "Anderson Machado");
+		man1.setBicicleta(bic1);
+		man1.setOficina(ofi1);
 		ofi1.getManutencoes().addAll(Arrays.asList(man1));
 		
 		oficinaRepository.saveAll(Arrays.asList(ofi1));
 		manutencaoRepository.saveAll(Arrays.asList(man1));
 		
-		Uso uso1 = new Uso(null, sdf.parse("12/12/2020 7:10"), sdf.parse("12/12/2020 7:50"), us1, bic1);
-		us1.getUsos().addAll(Arrays.asList(uso1));
+		Uso uso1 = new Uso(null, sdf.parse("12/12/2020 7:10"), sdf.parse("12/12/2020 7:50"));
+		uso1.setUsuario(usu1);
+		uso1.setDistancia(43.56);
+		uso1.getUsuario().setKmTotal(uso1.getDistancia());
+		uso1.setBicicleta(bic1);
+		usu1.getUsos().addAll(Arrays.asList(uso1));
 		
 		usoRepository.saveAll(Arrays.asList(uso1));
 

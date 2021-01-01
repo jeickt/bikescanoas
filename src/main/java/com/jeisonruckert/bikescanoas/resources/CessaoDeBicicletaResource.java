@@ -17,46 +17,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.jeisonruckert.bikescanoas.domain.Compra;
-import com.jeisonruckert.bikescanoas.dto.CompraDTO;
-import com.jeisonruckert.bikescanoas.dto.CompraNewDTO;
-import com.jeisonruckert.bikescanoas.services.CompraService;
+import com.jeisonruckert.bikescanoas.domain.CessaoDeBicicleta;
+import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaDTO;
+import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaNewDTO;
+import com.jeisonruckert.bikescanoas.services.CessaoDeBicicletaService;
 
 @RestController
-@RequestMapping(value="/compras")
-public class CompraResource {
+@RequestMapping(value="/cessoes")
+public class CessaoDeBicicletaResource {
 	
 	@Autowired
-	private CompraService service;
+	private CessaoDeBicicletaService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Compra> find(@PathVariable Integer id) {
-		Compra obj = service.find(id);
+	public ResponseEntity<CessaoDeBicicleta> find(@PathVariable Integer id) {
+		CessaoDeBicicleta obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<CompraDTO>> findAll() {
-		List<Compra> list = service.findAll();
-		List<CompraDTO> listDTO = list.stream().map(obj -> 
-		new CompraDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<CessaoDeBicicletaDTO>> findAll() {
+		List<CessaoDeBicicleta> list = service.findAll();
+		List<CessaoDeBicicletaDTO> listDTO = list.stream().map(obj -> 
+		new CessaoDeBicicletaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<CompraDTO>> findPage(
+	public ResponseEntity<Page<CessaoDeBicicletaDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="data") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
-		Page<Compra> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<CompraDTO> listDTO = list.map(obj -> new CompraDTO(obj));
+		Page<CessaoDeBicicleta> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<CessaoDeBicicletaDTO> listDTO = list.map(obj -> new CessaoDeBicicletaDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody CompraNewDTO objDto) {
-		Compra obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> insert(@Valid @RequestBody CessaoDeBicicletaNewDTO objDto) {
+		CessaoDeBicicleta obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -64,8 +64,8 @@ public class CompraResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CompraDTO objDto) {
-		Compra obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CessaoDeBicicletaDTO objDto) {
+		CessaoDeBicicleta obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

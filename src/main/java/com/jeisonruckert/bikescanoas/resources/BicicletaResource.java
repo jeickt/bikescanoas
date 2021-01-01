@@ -52,7 +52,7 @@ public class BicicletaResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	// POST implementado por CompraResource
+	// POST implementado por CessaoDeBicicletaResource
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody BicicletaDTO objDto) {

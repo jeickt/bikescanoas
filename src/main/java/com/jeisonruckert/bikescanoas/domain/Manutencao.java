@@ -26,7 +26,7 @@ public class Manutencao implements Serializable {
 	private Integer id;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date instante;
+	private Date data;
 	private Double km;
 	private Double custo;
 	private String mecanico;
@@ -51,16 +51,12 @@ public class Manutencao implements Serializable {
 	public Manutencao() {
 	}
 
-	public Manutencao(Integer id, Date instante, Double km, Double custo, String mecanico, Bicicleta bicicleta,
-			Oficina oficina) {
+	public Manutencao(Integer id, Double km, Double custo, String mecanico) {
 		super();
 		this.id = id;
-		this.instante = instante;
 		this.km = km;
 		this.custo = custo;
 		this.mecanico = mecanico;
-		this.bicicleta = bicicleta;
-		this.oficina = oficina;
 	}
 
 	
@@ -72,12 +68,12 @@ public class Manutencao implements Serializable {
 		this.id = id;
 	}
 
-	public Date getInstante() {
-		return instante;
+	public Date getData() {
+		return data;
 	}
 
-	public void setInstante(Date instante) {
-		this.instante = instante;
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public Double getKm() {

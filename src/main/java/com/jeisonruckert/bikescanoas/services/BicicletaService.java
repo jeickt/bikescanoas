@@ -58,7 +58,7 @@ public class BicicletaService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir uma bicicleta que possui compra associada");
+			throw new DataIntegrityException("Não é possível excluir uma bicicleta que possui compra e/ou usos associados");
 		}
 	}
 	

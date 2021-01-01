@@ -25,7 +25,7 @@ public class OficinaService {
 	public Oficina find(Integer id) {
 		Optional<Oficina> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-		"Objeto não encontrado! Id: " + id + ", Tipo: " + Oficina.class.getName()));
+		"Oficina não encontrado! Id: " + id + ", Tipo: " + Oficina.class.getName()));
 		}
 	
 	public List<Oficina> findAll() {
@@ -48,7 +48,7 @@ public class OficinaService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir um terminal que possui bicicletas");
+			throw new DataIntegrityException("Não é possível excluir uma oficina que possui manutenções associadas");
 		}
 	}
 	

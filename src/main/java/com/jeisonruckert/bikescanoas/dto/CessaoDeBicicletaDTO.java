@@ -8,9 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jeisonruckert.bikescanoas.domain.Compra;
+import com.jeisonruckert.bikescanoas.domain.CessaoDeBicicleta;
 
-public class CompraDTO implements Serializable {
+public class CessaoDeBicicletaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
@@ -23,10 +23,10 @@ public class CompraDTO implements Serializable {
 	@Length(min=5, max=80, message="Entre 5 e 80 caracteres")
 	private String loja;
 	
-	public CompraDTO() {
+	public CessaoDeBicicletaDTO() {
 	}
 	
-	public CompraDTO(Compra obj) {
+	public CessaoDeBicicletaDTO(CessaoDeBicicleta obj) {
 		id = obj.getId();
 		data = obj.getData();
 		preco = obj.getPreco();
