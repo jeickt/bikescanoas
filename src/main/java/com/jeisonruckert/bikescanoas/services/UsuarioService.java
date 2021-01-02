@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jeisonruckert.bikescanoas.domain.Cidade;
@@ -27,6 +28,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository repo;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
@@ -70,11 +74,11 @@ public class UsuarioService {
 	}
 	
 	public Usuario fromDTO(UsuarioDTO objDto) {
-		return new Usuario(objDto.getId(), null, objDto.getNome(), objDto.getEmail());
+		return new Usuario(objDto.getId(), null, objDto.getNome(), null, objDto.getEmail());
 	}
 	
 	public Usuario fromDTO(UsuarioNewDTO objDto) {
-		Usuario usu = new Usuario(null, objDto.getCpf(), objDto.getNome(), objDto.getEmail());
+		Usuario usu = new Usuario(null, objDto.getCpf(), objDto.getNome(), pe.encode(objDto.getSenha()), objDto.getEmail());
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), 
 				objDto.getBairro(), objDto.getCep(), usu, cid);

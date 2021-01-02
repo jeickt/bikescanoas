@@ -19,6 +19,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +32,9 @@ public class Usuario implements Serializable {
 	@CPF
 	private String cpf;
 	private String nome;
+	
+	@JsonIgnore
+	private String senha;
 	
 	@Column(unique=true)
 	private String email;
@@ -52,11 +57,12 @@ public class Usuario implements Serializable {
 	public Usuario() {
 	}
 
-	public Usuario(Integer id, String cpf, String nome, String email) {
+	public Usuario(Integer id, String cpf, String nome, String senha, String email) {
 		super();
 		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
+		this.senha = senha;
 		this.email = email;
 	}
 
@@ -83,6 +89,14 @@ public class Usuario implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getEmail() {
