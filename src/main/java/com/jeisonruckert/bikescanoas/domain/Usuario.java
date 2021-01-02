@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jeisonruckert.bikescanoas.domain.enums.Perfil;
 
 @Entity
 public class Usuario implements Serializable {
@@ -41,6 +44,10 @@ public class Usuario implements Serializable {
 	private Double saldo = 0.0;
 	private Double kmTotal = 0.0;
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
@@ -55,6 +62,7 @@ public class Usuario implements Serializable {
 	private List<Uso> usos = new ArrayList<>();
 	
 	public Usuario() {
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Usuario(Integer id, String cpf, String nome, String senha, String email) {
@@ -64,6 +72,7 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
+		addPerfil(Perfil.USUARIO);
 	}
 
 	
@@ -121,6 +130,14 @@ public class Usuario implements Serializable {
 
 	public void setKmTotal(Double kmTotal) {
 		this.kmTotal = kmTotal;
+	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 
 	public Set<String> getTelefones() {

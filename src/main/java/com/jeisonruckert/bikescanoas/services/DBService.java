@@ -23,6 +23,7 @@ import com.jeisonruckert.bikescanoas.domain.Terminal;
 import com.jeisonruckert.bikescanoas.domain.Uso;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.domain.enums.EstadoPagamento;
+import com.jeisonruckert.bikescanoas.domain.enums.Perfil;
 import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CessaoDeBicicletaRepository;
@@ -81,13 +82,18 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2));
 		
-		Usuario usu1 = new Usuario(null, "01234567890", "Jorge Cardoso", pe.encode("senha"), "jorge@gmail.com");
+		Usuario usu1 = new Usuario(null, "58364361007", "Jorge Cardoso", pe.encode("senha"), "jorge@gmail.com");
 		usu1.getTelefones().addAll(Arrays.asList("5130313233", "51987654321"));
+		
+		Usuario usu2 = new Usuario(null, "92946090060", "Ana Cardoso", pe.encode("outrasenha"), "ana@gmail.com");
+		usu1.getTelefones().addAll(Arrays.asList("5130313233", "51987654320"));
+		usu2.addPerfil(Perfil.ADMIN);
 		
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Igara", "92412-250", usu1, cid1);
 		usu1.setEndereco(end1);
+		usu2.setEndereco(end1);
 		
-		usuarioRepository.saveAll(Arrays.asList(usu1));
+		usuarioRepository.saveAll(Arrays.asList(usu1, usu2));
 		enderecoRepository.saveAll(Arrays.asList(end1));
 		
 		Categoria cat1 = new Categoria(null, "MTB");
