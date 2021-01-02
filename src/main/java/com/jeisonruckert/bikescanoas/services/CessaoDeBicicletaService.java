@@ -99,6 +99,7 @@ public class CessaoDeBicicletaService {
 		objBD.setData(obj.getData());
 		objBD.setPreco(obj.getPreco());
 		objBD.setLoja(obj.getLoja());
+		objBD.setUsuario(obj.getUsuario());
 	}
 	
  }

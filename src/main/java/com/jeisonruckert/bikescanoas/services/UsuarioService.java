@@ -90,6 +90,7 @@ public class UsuarioService {
 	private void updateData(Usuario objBD, Usuario obj) {
 		objBD.setNome(obj.getNome());
 		objBD.setEmail(obj.getEmail());
+		objBD.setEndereco(obj.getEndereco());
 	}
 	
  }

@@ -75,7 +75,7 @@ public class BicicletaResource {
 			@RequestParam(value="terminal", defaultValue="") String terminal,
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="tamQuadro") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue="tamAro") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
 		String consDecoded = URL.decodeParam(tamQuadro);
 		Page<Bicicleta> list = service.searchQuadro(consDecoded, Integer.parseInt(categoria), Integer.parseInt(terminal), page, linesPerPage, orderBy, direction);

@@ -48,6 +48,7 @@ public class BicicletaService {
 	}
 	
 	public Bicicleta update(Bicicleta obj) {
+		// return repo.save(obj); para atualizar completamente
 		Bicicleta objBD = find(obj.getId());
 		updateData(objBD, obj);
 		return repo.save(objBD);
