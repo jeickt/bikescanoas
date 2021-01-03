@@ -16,10 +16,13 @@ import org.springframework.stereotype.Service;
 import com.jeisonruckert.bikescanoas.domain.Cidade;
 import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
+import com.jeisonruckert.bikescanoas.domain.enums.Perfil;
 import com.jeisonruckert.bikescanoas.dto.UsuarioDTO;
 import com.jeisonruckert.bikescanoas.dto.UsuarioNewDTO;
 import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
+import com.jeisonruckert.bikescanoas.security.UserSS;
+import com.jeisonruckert.bikescanoas.services.exceptions.AuthorizationException;
 import com.jeisonruckert.bikescanoas.services.exceptions.DataIntegrityException;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,12 @@ public class UsuarioService {
 	private EnderecoRepository enderecoRepository;
 
 	public Usuario find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Usuario> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 		"Usuário não encontrado! Id: " + id + ", Tipo: " + Usuario.class.getName()));

@@ -19,6 +19,8 @@ import com.jeisonruckert.bikescanoas.dto.UsoDTO;
 import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsoRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
+import com.jeisonruckert.bikescanoas.security.UserSS;
+import com.jeisonruckert.bikescanoas.services.exceptions.AuthorizationException;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -93,6 +95,16 @@ public class UsoService {
 	private void updateData(Uso objBD, Uso obj) {
 		objBD.setChegada(obj.getChegada());
 		objBD.setPrecisaConserto(obj.getPrecisaConserto());
+	}
+	
+	public Page<Uso> findPageByUser(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Usuario usu = usuarioRepository.findById(user.getId()).get();
+		return repo.findByUsuario(usu, pageRequest);
 	}
 	
  }

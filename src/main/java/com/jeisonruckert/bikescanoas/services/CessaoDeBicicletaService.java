@@ -24,6 +24,8 @@ import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CessaoDeBicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.TerminalRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
+import com.jeisonruckert.bikescanoas.security.UserSS;
+import com.jeisonruckert.bikescanoas.services.exceptions.AuthorizationException;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -100,6 +102,16 @@ public class CessaoDeBicicletaService {
 		objBD.setPreco(obj.getPreco());
 		objBD.setLoja(obj.getLoja());
 		objBD.setUsuario(obj.getUsuario());
+	}
+	
+	public Page<CessaoDeBicicleta> findPageByUser(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Usuario usu = usuarioRepository.findById(user.getId()).get();
+		return repo.findByUsuario(usu, pageRequest);
 	}
 	
  }
