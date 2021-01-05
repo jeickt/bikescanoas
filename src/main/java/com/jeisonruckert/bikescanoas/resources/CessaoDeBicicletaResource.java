@@ -32,9 +32,10 @@ public class CessaoDeBicicletaResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<CessaoDeBicicleta> find(@PathVariable Integer id) {
+	public ResponseEntity<CessaoDeBicicletaDTO> find(@PathVariable Integer id) {
 		CessaoDeBicicleta obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
+		CessaoDeBicicletaDTO objDTO = new CessaoDeBicicletaDTO(obj);
+		return ResponseEntity.ok().body(objDTO);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
@@ -84,13 +85,14 @@ public class CessaoDeBicicletaResource {
 	}
 	
 	@RequestMapping(value="/user", method=RequestMethod.GET)
-	public ResponseEntity<Page<CessaoDeBicicleta>> findPageByUser(
+	public ResponseEntity<Page<CessaoDeBicicletaDTO>> findPageByUser(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="data") String orderBy, 
 			@RequestParam(value="direction", defaultValue="DESC") String direction) {
 		Page<CessaoDeBicicleta> list = service.findPageByUser(page, linesPerPage, orderBy, direction);
-		return ResponseEntity.ok().body(list);
+		Page<CessaoDeBicicletaDTO> listDTO = list.map(obj -> new CessaoDeBicicletaDTO(obj));
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 }

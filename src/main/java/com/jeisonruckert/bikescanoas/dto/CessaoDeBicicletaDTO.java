@@ -23,6 +23,8 @@ public class CessaoDeBicicletaDTO implements Serializable {
 	@Length(min=5, max=80, message="Entre 5 e 80 caracteres")
 	private String loja;
 	
+	private UsuarioDTO usuarioDTO;
+	
 	public CessaoDeBicicletaDTO() {
 	}
 	
@@ -30,6 +32,7 @@ public class CessaoDeBicicletaDTO implements Serializable {
 		id = obj.getId();
 		data = obj.getData();
 		preco = obj.getPreco();
+		usuarioDTO = new UsuarioDTO(obj.getUsuario());
 	}
 
 	public Integer getId() {
@@ -62,6 +65,14 @@ public class CessaoDeBicicletaDTO implements Serializable {
 
 	public void setLoja(String loja) {
 		this.loja = loja;
+	}
+
+	public UsuarioDTO getUsuario() {
+		return usuarioDTO;
+	}
+
+	public void setUsuario(UsuarioDTO usuarioDTO) {
+		this.usuarioDTO = usuarioDTO;
 	}
 	
 }
