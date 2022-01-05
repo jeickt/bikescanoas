@@ -20,8 +20,8 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.southsystem.desafio_3.resources"))
-                .paths(PathSelectors.ant("/**"))
+                .apis(RequestHandlerSelectors.basePackage("com.jeisonruckert.bikescanoas.resources"))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
     }
