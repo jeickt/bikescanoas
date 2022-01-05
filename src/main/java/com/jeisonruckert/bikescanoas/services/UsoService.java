@@ -98,7 +98,7 @@ public class UsoService {
 	}
 	
 	public Page<Uso> findPageByUser(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UsuarioLoginService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}

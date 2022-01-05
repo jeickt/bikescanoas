@@ -18,7 +18,7 @@ import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.domain.enums.Perfil;
 import com.jeisonruckert.bikescanoas.dto.UsuarioDTO;
-import com.jeisonruckert.bikescanoas.dto.UsuarioNewDTO;
+import com.jeisonruckert.bikescanoas.dto.UsuarioCompletoDTO;
 import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.security.UserSS;
@@ -39,7 +39,7 @@ public class UsuarioService {
 	private EnderecoRepository enderecoRepository;
 
 	public Usuario find(Integer id) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UsuarioLoginService.authenticated();
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
 		}
@@ -84,7 +84,7 @@ public class UsuarioService {
 		return new Usuario(objDto.getId(), null, objDto.getNome(), null, objDto.getEmail());
 	}
 	
-	public Usuario fromDTO(UsuarioNewDTO objDto) {
+	public Usuario fromDTO(UsuarioCompletoDTO objDto) {
 		Usuario usu = new Usuario(null, objDto.getCpf(), objDto.getNome(), pe.encode(objDto.getSenha()), objDto.getEmail());
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), 
