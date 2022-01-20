@@ -82,10 +82,10 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2));
 		
-		Usuario usu1 = new Usuario(null, "58364361007", "Jorge Cardoso", pe.encode("senha"), "jorge@gmail.com");
+		Usuario usu1 = new Usuario(null, "58364361007", "Jorge Cardoso", pe.encode("senha"), "jorgecardoso@gmail.com");
 		usu1.getTelefones().addAll(Arrays.asList("5130313233", "51987654321"));
 		
-		Usuario usu2 = new Usuario(null, "92946090060", "Ana Cardoso", pe.encode("outrasenha"), "ana@gmail.com");
+		Usuario usu2 = new Usuario(null, "92946090060", "Ana Cardoso", pe.encode("outrasenha"), "anacardoso@gmail.com");
 		usu1.getTelefones().addAll(Arrays.asList("5130313233", "51987654320"));
 		usu2.addPerfil(Perfil.ADMIN);
 		
