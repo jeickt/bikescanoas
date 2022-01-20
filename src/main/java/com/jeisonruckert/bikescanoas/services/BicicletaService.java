@@ -20,7 +20,6 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class BicicletaService {
 	
-
 	private BicicletaRepository repo;
 	
 	private CategoriaService categoriaService;
