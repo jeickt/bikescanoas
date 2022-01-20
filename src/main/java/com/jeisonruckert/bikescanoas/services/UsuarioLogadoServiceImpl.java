@@ -11,7 +11,7 @@ import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.security.UserSS;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UsuarioLogadoServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	private UsuarioRepository repo;

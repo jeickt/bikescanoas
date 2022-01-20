@@ -18,7 +18,7 @@ import com.jeisonruckert.bikescanoas.domain.CessaoDeBicicleta;
 import com.jeisonruckert.bikescanoas.domain.Terminal;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaDTO;
-import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaNewDTO;
+import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaCompletaDTO;
 import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
 import com.jeisonruckert.bikescanoas.repositories.CessaoDeBicicletaRepository;
@@ -85,7 +85,7 @@ public class CessaoDeBicicletaService {
 		return new CessaoDeBicicleta(objDto.getId(), objDto.getPreco(), objDto.getLoja());
 	}
 	
-	public CessaoDeBicicleta fromDTO(CessaoDeBicicletaNewDTO objDto) {
+	public CessaoDeBicicleta fromDTO(CessaoDeBicicletaCompletaDTO objDto) {
 		Categoria cat = categoriaRepository.findById(objDto.getCategoriaId()).get();
 		Terminal ter = terminalRepository.findById(objDto.getTerminalId()).get();
 		Bicicleta bic = new Bicicleta(null, objDto.getFabricante(), objDto.getModelo(), 
@@ -105,7 +105,7 @@ public class CessaoDeBicicletaService {
 	}
 	
 	public Page<CessaoDeBicicleta> findPageByUser(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UsuarioLoginService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
