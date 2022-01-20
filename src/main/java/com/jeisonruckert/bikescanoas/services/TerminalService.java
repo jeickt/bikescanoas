@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +20,11 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class TerminalService {
 	
-	@Autowired
 	private TerminalRepository repo;
+	
+	public TerminalService(TerminalRepository repository) {
+		this.repo = repository;
+	}
 
 	public Terminal find(Integer id) {
 		Optional<Terminal> obj = repo.findById(id);

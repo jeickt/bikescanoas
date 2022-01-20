@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -17,13 +16,9 @@ import com.jeisonruckert.bikescanoas.domain.Categoria;
 import com.jeisonruckert.bikescanoas.domain.CessaoDeBicicleta;
 import com.jeisonruckert.bikescanoas.domain.Terminal;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
-import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaDTO;
 import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaCompletaDTO;
-import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
-import com.jeisonruckert.bikescanoas.repositories.CategoriaRepository;
+import com.jeisonruckert.bikescanoas.dto.CessaoDeBicicletaDTO;
 import com.jeisonruckert.bikescanoas.repositories.CessaoDeBicicletaRepository;
-import com.jeisonruckert.bikescanoas.repositories.TerminalRepository;
-import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.security.UserSS;
 import com.jeisonruckert.bikescanoas.services.exceptions.AuthorizationException;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
@@ -31,20 +26,21 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class CessaoDeBicicletaService {
 	
-	@Autowired
-	private BicicletaRepository bicicletaRepository;
-	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
-	
-	@Autowired
 	private CessaoDeBicicletaRepository repo;
 	
-	@Autowired
-	private TerminalRepository terminalRepository;
+	private BicicletaService bicicletaService;
+	private CategoriaService categoriaService;
+	private TerminalService terminalService;
+	private UsuarioService usuarioService;
 	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	public CessaoDeBicicletaService(CessaoDeBicicletaRepository repository, BicicletaService bicicletaService,
+			CategoriaService categoriaService, TerminalService terminalService, UsuarioService usuarioService) {
+		this.repo = repository;
+		this.bicicletaService = bicicletaService;
+		this.categoriaService = categoriaService;
+		this.terminalService = terminalService;
+		this.usuarioService = usuarioService;
+	}
 
 	public CessaoDeBicicleta find(Integer id) {
 		Optional<CessaoDeBicicleta> obj = repo.findById(id);
@@ -61,7 +57,7 @@ public class CessaoDeBicicletaService {
 		obj.setId(null);
 		obj.setData(new Date());
 		obj = repo.save(obj);
-		bicicletaRepository.save(obj.getBicicleta());
+		bicicletaService.insert(obj.getBicicleta());
 		return obj;
 	}
 	
@@ -86,11 +82,11 @@ public class CessaoDeBicicletaService {
 	}
 	
 	public CessaoDeBicicleta fromDTO(CessaoDeBicicletaCompletaDTO objDto) {
-		Categoria cat = categoriaRepository.findById(objDto.getCategoriaId()).get();
-		Terminal ter = terminalRepository.findById(objDto.getTerminalId()).get();
+		Categoria cat = categoriaService.find(objDto.getCategoriaId());
+		Terminal ter = terminalService.find(objDto.getTerminalId());
 		Bicicleta bic = new Bicicleta(null, objDto.getFabricante(), objDto.getModelo(), 
 				objDto.getTamQuadro(), objDto.getTamAro(), cat, ter);
-		Usuario usu = usuarioRepository.findById(objDto.getUsuarioId()).get();
+		Usuario usu = usuarioService.find(objDto.getUsuarioId());
 		CessaoDeBicicleta ces = new CessaoDeBicicleta(null, objDto.getPreco(), objDto.getLoja());
 		ces.setBicicleta(bic);
 		ces.setUsuario(usu);
@@ -110,7 +106,7 @@ public class CessaoDeBicicletaService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Usuario usu = usuarioRepository.findById(user.getId()).get();
+		Usuario usu = usuarioService.find(user.getId());
 		return repo.findByUsuario(usu, pageRequest);
 	}
 	

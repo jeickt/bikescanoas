@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -16,22 +15,22 @@ import com.jeisonruckert.bikescanoas.domain.Bicicleta;
 import com.jeisonruckert.bikescanoas.domain.Manutencao;
 import com.jeisonruckert.bikescanoas.domain.Oficina;
 import com.jeisonruckert.bikescanoas.dto.ManutencaoDTO;
-import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.ManutencaoRepository;
-import com.jeisonruckert.bikescanoas.repositories.OficinaRepository;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ManutencaoService {
 	
-	@Autowired
-	private BicicletaRepository bicicletaRepository;
-	
-	@Autowired
 	private ManutencaoRepository repo;
-
-	@Autowired
-	private OficinaRepository oficinaRepository;
+	
+	private BicicletaService bicicletaService;
+	private OficinaService oficinaService;
+	
+	public ManutencaoService(ManutencaoRepository repository, BicicletaService bicicletaService, OficinaService oficinaService) {
+		this.repo = repository;
+		this.bicicletaService = bicicletaService;
+		this.oficinaService = oficinaService;
+	}
 
 	public Manutencao find(Integer id) {
 		Optional<Manutencao> obj = repo.findById(id);
@@ -72,9 +71,9 @@ public class ManutencaoService {
 	}
 	
 	public Manutencao fromDTO(ManutencaoDTO objDto) {
-		Bicicleta bic = bicicletaRepository.findById(objDto.getBicicletaId()).get();
+		Bicicleta bic = bicicletaService.find(objDto.getBicicletaId());
 		bic.setKmManutencao(0.0);
-		Oficina ofi = oficinaRepository.findById(objDto.getOficinaId()).get();
+		Oficina ofi = oficinaService.find(objDto.getOficinaId());
 		Manutencao man = new Manutencao(null, objDto.getKm(), objDto.getCusto(), objDto.getMecanico());
 		man.setPecas(objDto.getPecas());
 		man.setServicos(objDto.getServicos());
