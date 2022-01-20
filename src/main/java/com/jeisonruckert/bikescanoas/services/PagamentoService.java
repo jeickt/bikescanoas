@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeisonruckert.bikescanoas.domain.Pagamento;
@@ -18,11 +17,14 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class PagamentoService {
 	
-	@Autowired
 	private PagamentoRepository repo;
 	
-	@Autowired
 	private BoletoService boletoService;
+	
+	public PagamentoService(PagamentoRepository repository, BoletoService boletoService) {
+		this.repo = repository;
+		this.boletoService = boletoService;
+	}
 
 	public Pagamento find(Integer id) {
 		Optional<Pagamento> obj = repo.findById(id);

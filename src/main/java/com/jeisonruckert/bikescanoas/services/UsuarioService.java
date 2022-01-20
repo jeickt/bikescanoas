@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +16,8 @@ import com.jeisonruckert.bikescanoas.domain.Cidade;
 import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.domain.enums.Perfil;
-import com.jeisonruckert.bikescanoas.dto.UsuarioDTO;
 import com.jeisonruckert.bikescanoas.dto.UsuarioCompletoDTO;
+import com.jeisonruckert.bikescanoas.dto.UsuarioDTO;
 import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.security.UserSS;
@@ -28,15 +27,17 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 
 @Service
 public class UsuarioService {
-	
-	@Autowired
+
 	private UsuarioRepository repo;
 	
-	@Autowired
+	private EnderecoRepository enderecoRepository;
 	private BCryptPasswordEncoder pe;
 	
-	@Autowired
-	private EnderecoRepository enderecoRepository;
+	public UsuarioService(UsuarioRepository repository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder pe) {
+		this.repo = repository;
+		this.enderecoRepository = enderecoRepository;
+		this.pe = pe;
+	}
 
 	public Usuario find(Integer id) {
 		UserSS user = UsuarioLoginService.authenticated();
