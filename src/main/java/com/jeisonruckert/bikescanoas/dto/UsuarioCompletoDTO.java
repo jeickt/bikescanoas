@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.jeisonruckert.bikescanoas.services.validation.UsuarioInsert;
 
 @UsuarioInsert
-public class UsuarioNewDTO implements Serializable {
+public class UsuarioCompletoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
@@ -47,7 +47,7 @@ public class UsuarioNewDTO implements Serializable {
 	
 	private Integer cidadeId;
 	
-	public UsuarioNewDTO() {
+	public UsuarioCompletoDTO() {
 	}
 	
 

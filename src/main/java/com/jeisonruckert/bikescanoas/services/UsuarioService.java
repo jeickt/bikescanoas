@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +16,8 @@ import com.jeisonruckert.bikescanoas.domain.Cidade;
 import com.jeisonruckert.bikescanoas.domain.Endereco;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.domain.enums.Perfil;
+import com.jeisonruckert.bikescanoas.dto.UsuarioCompletoDTO;
 import com.jeisonruckert.bikescanoas.dto.UsuarioDTO;
-import com.jeisonruckert.bikescanoas.dto.UsuarioNewDTO;
 import com.jeisonruckert.bikescanoas.repositories.EnderecoRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.security.UserSS;
@@ -28,18 +27,20 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 
 @Service
 public class UsuarioService {
-	
-	@Autowired
+
 	private UsuarioRepository repo;
 	
-	@Autowired
+	private EnderecoRepository enderecoRepository;
 	private BCryptPasswordEncoder pe;
 	
-	@Autowired
-	private EnderecoRepository enderecoRepository;
+	public UsuarioService(UsuarioRepository repository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder pe) {
+		this.repo = repository;
+		this.enderecoRepository = enderecoRepository;
+		this.pe = pe;
+	}
 
 	public Usuario find(Integer id) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UsuarioLoginService.authenticated();
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
 		}
@@ -84,7 +85,7 @@ public class UsuarioService {
 		return new Usuario(objDto.getId(), null, objDto.getNome(), null, objDto.getEmail());
 	}
 	
-	public Usuario fromDTO(UsuarioNewDTO objDto) {
+	public Usuario fromDTO(UsuarioCompletoDTO objDto) {
 		Usuario usu = new Usuario(null, objDto.getCpf(), objDto.getNome(), pe.encode(objDto.getSenha()), objDto.getEmail());
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), 
