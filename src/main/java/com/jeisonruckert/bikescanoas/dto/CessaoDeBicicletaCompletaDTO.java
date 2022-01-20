@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-public class CessaoDeBicicletaNewDTO implements Serializable {
+public class CessaoDeBicicletaCompletaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Double preco;
@@ -33,7 +33,7 @@ public class CessaoDeBicicletaNewDTO implements Serializable {
 	
 	private Integer usuarioId;
 	
-	public CessaoDeBicicletaNewDTO() {
+	public CessaoDeBicicletaCompletaDTO() {
 	}
 	
 

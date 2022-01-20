@@ -9,11 +9,11 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeisonruckert.bikescanoas.domain.Usuario;
-import com.jeisonruckert.bikescanoas.dto.UsuarioNewDTO;
+import com.jeisonruckert.bikescanoas.dto.UsuarioCompletoDTO;
 import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.resources.exceptions.FieldMessage;
 
-public class UsuarioInsertValidator implements ConstraintValidator<UsuarioInsert, UsuarioNewDTO> {
+public class UsuarioInsertValidator implements ConstraintValidator<UsuarioInsert, UsuarioCompletoDTO> {
 	
 	@Autowired
 	private UsuarioRepository repo;
@@ -23,7 +23,7 @@ public class UsuarioInsertValidator implements ConstraintValidator<UsuarioInsert
 	}
 
 	@Override
-	public boolean isValid(UsuarioNewDTO objDto, ConstraintValidatorContext context) {
+	public boolean isValid(UsuarioCompletoDTO objDto, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
 
 		Usuario aux = repo.findByEmail(objDto.getEmail());

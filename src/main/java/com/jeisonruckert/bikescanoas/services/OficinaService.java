@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +20,11 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class OficinaService {
 	
-	@Autowired
 	private OficinaRepository repo;
+	
+	public OficinaService(OficinaRepository repository) {
+		this.repo = repository;
+	}
 
 	public Oficina find(Integer id) {
 		Optional<Oficina> obj = repo.findById(id);

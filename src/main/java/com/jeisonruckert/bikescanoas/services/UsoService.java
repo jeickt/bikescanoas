@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -16,9 +15,7 @@ import com.jeisonruckert.bikescanoas.domain.Bicicleta;
 import com.jeisonruckert.bikescanoas.domain.Uso;
 import com.jeisonruckert.bikescanoas.domain.Usuario;
 import com.jeisonruckert.bikescanoas.dto.UsoDTO;
-import com.jeisonruckert.bikescanoas.repositories.BicicletaRepository;
 import com.jeisonruckert.bikescanoas.repositories.UsoRepository;
-import com.jeisonruckert.bikescanoas.repositories.UsuarioRepository;
 import com.jeisonruckert.bikescanoas.security.UserSS;
 import com.jeisonruckert.bikescanoas.services.exceptions.AuthorizationException;
 import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException;
@@ -26,14 +23,16 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class UsoService {
 	
-	@Autowired
-	private BicicletaRepository bicicletaRepository;
-	
-	@Autowired
 	private UsoRepository repo;
-
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	
+	private BicicletaService bicicletaService;
+	private UsuarioService usuarioService;
+	
+	public UsoService(UsoRepository repository, BicicletaService bicicletaService, UsuarioService usuarioService) {
+		this.repo = repository;
+		this.bicicletaService = bicicletaService;
+		this.usuarioService = usuarioService;
+	}
 
 	public Uso find(Integer id) {
 		Optional<Uso> obj = repo.findById(id);
@@ -84,8 +83,8 @@ public class UsoService {
 	}
 	
 	public Uso fromDTO(UsoDTO objDto) {
-		Bicicleta bic = bicicletaRepository.findById(objDto.getBicicletaId()).get();
-		Usuario usu = usuarioRepository.findById(objDto.getUsuarioId()).get();
+		Bicicleta bic = bicicletaService.find(objDto.getBicicletaId());
+		Usuario usu = usuarioService.find(objDto.getUsuarioId());
 		Uso uso = new Uso(null, null, null);
 		uso.setBicicleta(bic);
 		uso.setUsuario(usu);
@@ -98,12 +97,12 @@ public class UsoService {
 	}
 	
 	public Page<Uso> findPageByUser(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UsuarioLoginService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Usuario usu = usuarioRepository.findById(user.getId()).get();
+		Usuario usu = usuarioService.find(user.getId());
 		return repo.findByUsuario(usu, pageRequest);
 	}
 	
