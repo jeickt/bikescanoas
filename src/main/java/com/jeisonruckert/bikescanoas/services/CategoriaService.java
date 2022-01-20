@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +20,11 @@ import com.jeisonruckert.bikescanoas.services.exceptions.ObjectNotFoundException
 @Service
 public class CategoriaService {
 	
-	@Autowired
 	private CategoriaRepository repo;
+	
+	public CategoriaService(CategoriaRepository repository) {
+		this.repo = repository;
+	}
 
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);

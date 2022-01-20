@@ -1,6 +1,5 @@
 package com.jeisonruckert.bikescanoas.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,8 +12,11 @@ import com.jeisonruckert.bikescanoas.security.UserSS;
 @Service
 public class UsuarioLogadoServiceImpl implements UserDetailsService {
 	
-	@Autowired
 	private UsuarioRepository repo;
+	
+	public UsuarioLogadoServiceImpl(UsuarioRepository repository) {
+		this.repo = repository;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
